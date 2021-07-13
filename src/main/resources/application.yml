@@ -1,0 +1,43 @@
+server:
+    port: 9090
+spring:
+    datasource:
+        password: postgres
+        platform: postgres
+        url: jdbc:postgresql://localhost:5432/postgres
+        username: postgres
+    jpa:
+        database: POSTGRESQL
+        generate-ddl: true
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                jdbc:
+                    lob:
+                        non_contextual_creation: true
+        show-sql: true
+    mail:
+        host: smtp.gmail.com
+        password: ********
+        port: 587
+        properties:
+            mail:
+                smtp:
+                    auth: true
+                    starttls:
+                        enable: true
+        username: vijayvantipalli@gmail.com
+
+app:
+    messages:
+        welcomeMsg: Welcome to Ashok IT..!!
+        greetMsg: Good Morning..!!
+        invalidCredentials: Invalid Credentials
+        accLocked: Your Account Locked
+        userRegSuccess: Please check your email for unlocking your account
+        userRegFail: Failed to Register
+        unlockAccEmailSub: Registration Success!
+        unlockAccEmailBodyFile : UNLOCK-ACC.txt
+        recoverEmailBodyFile : RECOVER-PASSWORD.txt
+        recoverPwdEmailSub: Forgor Password
