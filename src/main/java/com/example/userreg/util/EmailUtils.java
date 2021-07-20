@@ -35,7 +35,7 @@ public class EmailUtils {
         return isSent;
     }
 
-    public String generateMailBody(User entity) {
+    public String generateMailBody(User entity, String pwd) {
         StringBuffer sb = new StringBuffer("");
         String mailBody = "";
         try {
@@ -49,7 +49,7 @@ public class EmailUtils {
             mailBody = sb.toString();
             mailBody = mailBody.replace("{FNAME}", entity.getFname());
             mailBody = mailBody.replace("{LNAME}", entity.getLname());
-            mailBody = mailBody.replace("{TEMP-PWD}", entity.getUsrPwd());
+            mailBody = mailBody.replace("{TEMP-PWD}", pwd);
             mailBody = mailBody.replace("{EMAIL}", entity.getEmail());
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -73,7 +73,7 @@ public class EmailUtils {
             mailBody = sb.toString();
             mailBody = mailBody.replace("{FNAME}", entity.getFname());
             mailBody = mailBody.replace("{LNAME}", entity.getLname());
-            mailBody = mailBody.replace("{PWD}", entity.getUsrPwd());
+            mailBody = mailBody.replace("{PWD}", PwdUtils.decrypt(entity.getUsrPwd()));
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

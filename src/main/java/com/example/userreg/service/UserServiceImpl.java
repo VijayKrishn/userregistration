@@ -14,6 +14,7 @@ import com.example.userreg.repository.CountryRepo;
 import com.example.userreg.repository.StateRepo;
 import com.example.userreg.repository.UserRepo;
 import com.example.userreg.util.EmailUtils;
+import com.example.userreg.util.PwdUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
@@ -111,12 +112,10 @@ public class UserServiceImpl implements UserService{
         User entity = new User();
         BeanUtils.copyProperties(usrForm, entity);
         entity.setAccStatus(AppConstants.LOCKED);
-        entity.setUsrPwd(generateRandomPwd(6));
-
-        //TODO: Password Encryption
-
+        String pwd = generateRandomPwd(6);
+        entity.setUsrPwd(PwdUtils.encrypt(pwd));
         entity = userRepo.save(entity);
-        String body = emailUtils.generateMailBody(entity);
+        String body = emailUtils.generateMailBody(entity, pwd);
         String subject = appProps.getMessages().get(AppConstants.UNLOCK_ACC_EMAIL_SUB);
         boolean status = emailUtils.sendEmail(usrForm.getEmail(), "subject", body);
         return entity.getUserId() != null ? true : false;
